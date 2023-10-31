@@ -14,20 +14,20 @@ export  const Header = ()=>{
     
     return(
           
-        <div className="header">
-        <div className="logo">
+        <div className="flex justify-around bg-slate-100 w-[100%]">
+        <div className="w-20 ">
             <img src= {LOGO_URL} />
         </div>
-        <div className="opt">
-            <ul>
-                <li>Status: {status ? "online" : "offline"}</li>
-                <li><Link to="/">Home</Link > </li>
-                <li><Link to="/about">About Us</Link></li>
-                <li><Link to="/contact">Contact Us</Link></li>
-                <li><Link to="/grocery">Grocery-mart</Link></li>
+        <div className="flex items-center text-center">
+            <ul className="flex text-center font-semibold">
+                <li className="px-4 hover:text-orange-500">Status: {status ? "online" : "offline"}</li>
+                <li className="px-4 hover:text-orange-500"><Link to="/">Home</Link > </li>
+                <li className="px-4 hover:text-orange-500"><Link to="/about">About Us</Link></li>
+                <li className="px-4 hover:text-orange-500"><Link to="/contact">Contact Us</Link></li>
+                <li className="px-4 hover:text-orange-500"><Link to="/grocery">Grocery-mart</Link></li>
 
-                <li>sign in</li>
-                <button className="btn" onClick={()=>{
+                <li className="px-4">sign in</li>
+                <button className="px-4 mx-2 border border-solid border-blue-500 rounded-lg font-bold" onClick={()=>{
                       btn === "login" ? setBtn("logout") : setBtn("login");
                 }}>{btn}</button>
             </ul>

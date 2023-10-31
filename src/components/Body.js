@@ -1,4 +1,4 @@
-import ResData from "./ResData";
+import ResData,{ openRestaurent } from "./ResData";
 import { restro } from "./utils/mokeData";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
@@ -10,6 +10,8 @@ const Body = ()=>{
   const [resList, setresList] = useState([]);
   const [searchText,setSearchText] = useState("");
   const [filteredRes, setfilteredRes] = useState([]);
+
+  const StatusRestaurent = openRestaurent(ResData);
 
   useEffect(()=>{
     fetchData();
@@ -34,15 +36,15 @@ const Body = ()=>{
 
     return resList.length === 0 ? <Shimmer /> : (
         <div className="body">
-        <div className="filter">
-          <div className="searchBox">
-            <input type="text" className="search" value={searchText} onChange={
+        <div className="flex">
+          <div className="flex justify-center items-center mx-[10rem] searchBox">
+            <input type="text" className="m-4 p-1 border-2 rounded-lg border-solid border-blue-500" value={searchText} onChange={
               (e)=>{
                 setSearchText(e.target.value);
               }
               }
               />  
-            <button className="searchBtn"
+            <button className="hover:bg-black hover:text-white hover:shadow-xl transition-all 400ms ease m-4 p-1 border-2 border-solid rounded-lg border-black font-bold color-whit"
             onClick={()=>{
               const filteredRes = resList.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
@@ -53,7 +55,7 @@ const Body = ()=>{
             }}
             >Search keyword</button>
           </div>
-          <button className="filter-btn" 
+          <button className="hover:bg-black hover:text-white hover:shadow-xl transition-all 400ms ease m-4 p-1 border-2 border-solid rounded-lg font-bold border-black " 
           onClick={()=>{
             const filteredList = resList.filter(
               (res)=> res.info.avgRating > 4
@@ -62,13 +64,20 @@ const Body = ()=>{
           }}
           >Top reated Restaurents</button>
         </div>
-        <div className="resContainer">
+        <div className="flex flex-wrap px-[9rem] items-center justify-center">
          
       {
-        filteredRes.map((restourent)=>(
-          <Link key = {restourent.info.id} to={"/restaurents/"+restourent.info.id}><ResData  resinfo = {restourent}/></Link>
+        filteredRes.map((restaurant)=>(
+          <Link key = {restaurant.info.id} to={"/restaurents/"+restaurant.info.id}>
+
+        {restaurant.info.isOpen ? <StatusRestaurent resinfo = {restaurant}/> : <ResData  resinfo = {restaurant}/>
+        } 
+          </Link>
         ))
-      }
+      };
+
+
+     
         </div>
         </div>
     )
