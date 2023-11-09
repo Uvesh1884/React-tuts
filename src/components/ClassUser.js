@@ -35,11 +35,15 @@ class ClassUser extends React.Component {
         // console.log("child render")
         const {name,location,avatar_url} = this.state.userInfo;
         return(
-            <div className="user">
-                <img src={avatar_url}/>
+            <div className="user">  
+            <div className="w-[11rem] m-auto bg-gray-300 p-4 bg-opacity-30 rounded-lg border border-black"> 
+            <img className="w-[10rem] m-auto" src={avatar_url}/>
+            </div>
+            <div className="m-auto w-[10rem]">
             <h3>name: {name} </h3>
             <h3>location: {location}</h3>
             <h4>Contact : usadeki@gmail.com</h4>
+            </div>
         </div>
         );
     }

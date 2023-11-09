@@ -1,9 +1,11 @@
 import ResData,{ openRestaurent } from "./ResData";
 import { restro } from "./utils/mokeData";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Shimmer from "./Shimmer";
 import {Link} from "react-router-dom";
 import useOnlineStatus from "./utils/useOnlineStatus";
+import ReactContext from "./utils/ReactContext";
+
 
 const Body = ()=>{
 
@@ -18,7 +20,7 @@ const Body = ()=>{
   }, []);
 
   const fetchData = async()=>{
-    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=23.0224734&lng=72.5715931&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.4707019&lng=70.05773&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
     const json = await data.json();
     console.log(json);
 
@@ -27,6 +29,8 @@ const Body = ()=>{
   }
   // use 
     const status = useOnlineStatus();
+
+    const {loggedInUser, setUserName} = useContext(ReactContext);
     
     if(status === false)
 
@@ -57,13 +61,21 @@ const Body = ()=>{
           </div>
           <button className="hover:bg-black hover:text-white hover:shadow-xl transition-all 400ms ease m-4 p-1 border-2 border-solid rounded-lg font-bold border-black " 
           onClick={()=>{
-            const filteredList = resList.filter(
+            const filteredList = filteredRes.filter(
               (res)=> res.info.avgRating > 4
             );
-            setresList(filteredList);
+            setfilteredRes(filteredList);
           }}
           >Top reated Restaurents</button>
+          <div>
+            <label>Username :-</label>
+        <input type="text" className="m-4 p-1 border-2 rounded-lg border-solid border-blue-500" value={loggedInUser} onChange={
+              (e)=>setUserName(e.target.value)  }
+              /> 
         </div>
+        </div>
+
+        
         <div className="flex flex-wrap px-[9rem] items-center justify-center">
          
       {

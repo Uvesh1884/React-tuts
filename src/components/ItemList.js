@@ -1,12 +1,21 @@
+import { useContext } from "react";
 import { IMG_URL } from "./utils/constants";
+import ReactContext from "./utils/ReactContext";
+import { useDispatch } from "react-redux";
+import { addItems } from "./utils/cartSlice";
+
+
 const ItemList = ({items})=>{
 
-    const hendleClick = ()=>{
-        console.log("Clicked")
+    const dispetch = useDispatch();
+
+    const handleCart = (item)=>{
+        dispetch(addItems(item));
     }
+
     return <div>
         {items.map((item=>(
-            <div key={item.card.info.id} onClick={hendleClick} className="flex justify-between border-b-2">
+            <div key={item.card.info.id} className="flex justify-between border-b-2">
             <div className="my-4 p-4">
             <ul>
             <li className="font-bold my-2">{item.card.info.name}</li>
@@ -18,7 +27,7 @@ const ItemList = ({items})=>{
             </div>
             <div className="my-4 p-4 relative">
                 <img className="relative w-[7rem] shadow-xl rounded-lg" src={IMG_URL + item.card.info.imageId} />
-                <button className="absolute m-auto px-[2.5rem] top-20 border bg-green-300 bg-opacity-70 rounded-lg">ADD</button>
+                <button className="absolute m-auto px-[2.5rem] top-20 border bg-green-300 bg-opacity-70 rounded-lg" onClick={()=>handleCart(item)}>ADD</button>
                 </div>
             </div>
         )))}
